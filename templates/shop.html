@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+<!-- Shop Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Our Products & Services</h1>
+        <p>Discover our range of premium solutions designed for your success</p>
+    </div>
+</section>
+
+<!-- Shop Content -->
+<section class="shop-section">
+    <div class="container">
+        <div class="shop-controls">
+            <div class="shop-filter">
+                <select id="category-filter" onchange="filterByCategory()">
+                    <option value="all" {% if current_category == 'all' %}selected{% endif %}>All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}" {% if current_category == category %}selected{% endif %}>{{ category|title }}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="sort-filter">
+                    <option value="default">Default Sorting</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Alphabetical</option>
+                </select>
+            </div>
+
+            <div class="shop-search">
+                <input type="text" placeholder="Search products..." id="search-input">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="products-grid">
+            {% if products %}
+                {% for product in products %}
+                <div class="product-card" id="product-{{ product.id }}">
+                    <div class="product-image">
+                        <img src="{{ url_for('static', filename='images/' + product.image) if product.image.startswith(('CUNFU', 'SYLFLORA')) else product.image }}" alt="{{ product.name }}">
+                        <div class="product-overlay">
+                            <button class="quick-view" data-id="{{ product.id }}">Quick View</button>
+                        </div>
+                        <button class="quick-add-btn" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" data-product-price="{{ product.price }}">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <p class="product-description">{{ product.description }}</p>
+                        <p class="product-price">${{ "%.2f"|format(product.price) }}</p>
+                        <div class="product-actions">
+                            <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+                                <button type="submit" class="btn btn-small add-to-cart">Add to Cart</button>
+                            </form>
+                            <button class="btn btn-small btn-secondary quick-view" data-id="{{ product.id }}">Details</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-products">
+                    <p>No products available in this category.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="pagination">
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <a href="#" class="page-link next">Next &raquo;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Quick View Modal -->
+<div id="quickViewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <div class="modal-product-image">
+                <img src="" alt="Product Image" id="modal-product-img">
+            </div>
+            <div class="modal-product-details">
+                <h2 id="modal-product-name"></h2>
+                <p class="modal-product-price" id="modal-product-price"></p>
+                <p class="modal-product-desc" id="modal-product-desc"></p>
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1">
+                </div>
+                <form method="POST" action="" id="modal-add-to-cart-form">
+                    <button type="submit" class="btn btn-primary add-to-cart-modal">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function filterByCategory() {
+    const category = document.getElementById('category-filter').value;
+    window.location.href = "{{ url_for('shop') }}?category=" + category;
+}
+
+// Update the modal form action when quick view is clicked
+document.querySelectorAll('.quick-view').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-id');
+        const form = document.getElementById('modal-add-to-cart-form');
+        form.action = "{{ url_for('add_to_cart', product_id=0) }}".replace('0', productId);
+    });
+});
+
+// Quick add functionality
+document.querySelectorAll('.quick-add-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        const productName = this.getAttribute('data-product-name');
+        const productPrice = parseFloat(this.getAttribute('data-product-price'));
+
+        // Visual feedback
+        const productCard = document.getElementById('product-' + productId);
+        productCard.classList.add('added-to-cart');
+        setTimeout(() => {
+            productCard.classList.remove('added-to-cart');
+        }, 300);
+
+        // Add to cart via AJAX
+        fetch("{{ url_for('add_to_cart', product_id=0) }}".replace('0', productId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update cart summary
+                updateCartSummary(data.cart_count, data.cart_total);
+                showCartSummary(productName, productPrice);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+// Show cart summary with animation
+function showCartSummary(productName, productPrice) {
+    const cartBar = document.getElementById('cartSummaryBar');
+    const cartCount = document.getElementById('cart-summary-count');
+    const cartTotal = document.getElementById('cart-summary-total');
+
+    // Get current cart count from the navbar (set by Flask context processor)
+    const currentCartCount = parseInt(document.querySelector('.cart-count').textContent) || 0;
+    const currentCartTotal = parseFloat("{{ cart_total|default(0) }}") || 0;
+
+    // Update content
+    cartCount.textContent = (currentCartCount + 1) + ' items';
+    cartTotal.textContent = (currentCartTotal + productPrice).toFixed(2);
+
+    // Show with animation
+    cartBar.classList.add('show');
+    document.body.classList.add('has-cart-summary');
+
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        hideCartSummary();
+    }, 5000);
+}
+
+function hideCartSummary() {
+    const cartBar = document.getElementById('cartSummaryBar');
+    cartBar.classList.remove('show');
+    document.body.classList.remove('has-cart-summary');
+}
+
+function updateCartSummary(count, total) {
+    const cartCount = document.getElementById('cart-summary-count');
+    const cartTotal = document.getElementById('cart-summary-total');
+    const navCartCount = document.querySelector('.cart-count');
+
+    if (cartCount) cartCount.textContent = count + ' ' + (count === 1 ? 'item' : 'items');
+    if (cartTotal) cartTotal.textContent = total.toFixed(2);
+    if (navCartCount) navCartCount.textContent = count;
+}
+</script>
+{% endblock %}

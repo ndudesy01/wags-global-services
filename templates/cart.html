@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% extends "base.html" %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<!-- Cart Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Your Shopping Cart</h1>
+        <p>Review and manage your items</p>
+    </div>
+</section>
+
+<!-- Cart Content -->
+<section class="cart-section">
+    <div class="container">
+        {% if cart_items %}
+        <div class="cart-grid">
+            <div class="cart-items">
+                <h2>Cart Items ({{ cart_count }})</h2>
+                
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="{{ url_for('static', filename='images/' + item.Product.image) if item.Product.image.startswith(('CUNFU', 'SYLFLORA')) else item.Product.image }}" alt="{{ item.Product.name }}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h3>{{ item.Product.name }}</h3>
+                        <p class="cart-item-price">${{ "%.2f"|format(item.Product.price) }}</p>
+                        <p class="cart-item-desc">{{ item.Product.description[:100] }}...</p>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <form method="POST" action="{{ url_for('update_cart', item_id=item.CartItem.id) }}">
+                            <div class="quantity-controls">
+                                <button type="submit" name="action" value="decrease" class="qty-btn">-</button>
+                                <span class="quantity">{{ item.CartItem.quantity }}</span>
+                                <button type="submit" name="action" value="increase" class="qty-btn">+</button>
+                            </div>
+                            <button type="submit" name="action" value="remove" class="btn btn-small btn-danger">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </form>
+                    </div>
+                    <div class="cart-item-total">
+                        ${{ "%.2f"|format(item.Product.price * item.CartItem.quantity) }}
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="cart-actions">
+                    <form method="POST" action="{{ url_for('clear_cart') }}" onsubmit="return confirm('Are you sure you want to clear your cart?');">
+                        <button type="submit" class="btn btn-outline">Clear Cart</button>
+                    </form>
+                    <a href="{{ url_for('shop') }}" class="btn btn-secondary">Continue Shopping</a>
+                </div>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal ({{ cart_count }} items)</span>
+                        <span>${{ "%.2f"|format(total) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>${{ "%.2f"|format(total * 0.1) }}</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>${{ "%.2f"|format(total * 1.1) }}</span>
+                    </div>
+                    
+                    <div class="wallet-balance">
+                        <p>Your wallet balance: <strong>${{ "%.2f"|format(user.wallet_balance) }}</strong></p>
+                        {% if user.wallet_balance < total * 1.1 %}
+                        <p class="insufficient-funds">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Insufficient funds. <a href="{{ url_for('wallet') }}">Add funds to wallet</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('checkout') }}" onsubmit="return confirm('Confirm purchase?');">
+                        <button type="submit" class="btn btn-primary btn-full" {% if user.wallet_balance < total * 1.1 %}disabled{% endif %}>
+                            Proceed to Checkout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-cart-content">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="{{ url_for('shop') }}" class="btn btn-primary">Start Shopping</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}</title>
+</head>
+<body>
+
+</body>
+</html>
