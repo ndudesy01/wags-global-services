@@ -102,7 +102,7 @@
 
         .btn-outline:hover {
             background-color: var(--primary-color);
-           极 white;
+            color: white;
         }
 
         .btn-small {
@@ -220,7 +220,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 极0%, rgba(173, 216, 230, 0.6) 0%, transparent 50%),
+            background: radial-gradient(circle at 20% 0%, rgba(173, 216, 230, 0.6) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, rgba(135, 206, 250, 0.5) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, rgba(176, 224, 230, 0.5) 0%, transparent 50%);
             animation: pulse 15s ease-in-out infinite;
@@ -246,7 +246,7 @@
             justify-content: center;
             gap: 1rem;
             position: relative;
-           极-index: 2;
+            z-index: 2;
         }
 
         .page-hero {
@@ -264,7 +264,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 70%, rgba(173极 216, 230, 0.6) 0%, transparent 50%),
+            background: radial-gradient(circle at 30% 70%, rgba(173, 216, 230, 0.6) 0%, transparent 50%),
                         radial-gradient(circle at 70% 30%, rgba(135, 206, 250, 0.5) 0%, transparent 50%);
             animation: pulse 15s ease-in-out infinite;
             pointer-events: none;
@@ -277,7 +277,7 @@
             }
             50% {
                 opacity: 0.8;
-                transform:极cale(1.05);
+                transform: scale(1.05);
             }
             100% {
                 opacity: 0.6;
@@ -307,7 +307,7 @@
             background-color: var(--bg-white);
             padding: 2rem;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 极, 0.05);
             text-align: center;
             transition: transform 0.3s;
         }
@@ -325,7 +325,7 @@
         /* Products */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280极, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -333,7 +333,7 @@
             background-color: var(--bg-white);
             border-radius: 0.5rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba极0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s;
         }
 
@@ -409,7 +409,7 @@
         /* Testimonials */
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, min极(400px, 1fr));
             gap: 2rem;
         }
 
@@ -420,7 +420,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        .极estimonial-content {
+        .testimonial-content {
             margin-bottom: 1.5rem;
             font-style: italic;
         }
@@ -446,7 +446,7 @@
             margin-bottom: 1rem;
         }
 
-        .newsletter-content极 {
+        .newsletter-content p {
             margin-bottom: 2rem;
         }
 
@@ -471,12 +471,12 @@
         .footer {
             background-color: #1f2937;
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 3rem极 1rem;
         }
 
         .footer-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-column极: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -642,7 +642,7 @@
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
+            border-radius: 0.375极;
             font-family: inherit;
         }
 
@@ -650,7 +650,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 极.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .checkbox-container {
@@ -682,7 +682,7 @@
             align-items: center;
             margin-bottom: 2rem;
             flex-wrap: wrap;
-            gap: 1极;
+            gap: 1rem;
         }
 
         .shop-filter {
@@ -690,7 +690,7 @@
             gap: 1rem;
         }
 
-        .极hop-filter select {
+        .shop-filter select {
             padding: 0.5rem;
             border: 1px solid var(--border-color);
             border-radius: 0.25rem;
@@ -703,7 +703,7 @@
         .shop-search input {
             padding: 0.5rem;
             border: 1px solid var(--border-color);
-            border-radius: 0.25rem 0 极 0.25rem;
+            border-radius: 0.25rem 0 0 0.25rem;
             border-right: none;
         }
 
@@ -721,10 +721,10 @@
             justify-content: center;
             gap: 0.5rem;
             margin-top: 3rem;
-        }
+极        }
 
         .page-link {
-            padding: 0.5rem 1rem;
+            padding: 0.5极 1rem;
             border: 1px solid var(--border-color);
             border-radius: 0.25rem;
             color: var(--text-color);
@@ -832,7 +832,7 @@
             background-color: var(--bg-white);
             padding: 2rem;
             border-radius: 0.5rem;
-            box-shadow: 0 4极 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .transactions-list {
@@ -874,7 +874,7 @@
 
         .wallet-actions {
             background-color: var(--bg-white);
-            padding: 2rem;
+极           padding: 2rem;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
@@ -919,7 +919,7 @@
                 display: flex;
             }
 
-            .hamburger.active .bar:n极-child(2) {
+            .hamburger.active .bar:nth-child(2) {
                 opacity: 0;
             }
 
@@ -932,7 +932,7 @@
             }
         }
 
-        @media (极ax-width: 768px) {
+        @media (max-width: 768px) {
             .hero-buttons,
             .shop-controls,
             .action-buttons {
@@ -1034,12 +1034,12 @@
             height: 30px;
             border: 1px solid var(--border-color);
             background: white;
-            border-radius: 极.25rem;
+            border-radius: 0.25rem;
             cursor: pointer;
         }
 
         .quantity {
-            font-weight: 600;
+            font-weight: 极;
             min-width: 30px;
             text-align: center;
         }
@@ -1055,7 +1055,7 @@
             gap: 1rem;
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid var(--极order-color);
+            border-top: 1px solid var(--border-color);
         }
 
         .cart-summary {
@@ -1083,7 +1083,7 @@
         .summary-row.total {
             font-weight: 700;
             font-size: 1.2rem;
-            color: var(--primary-color);
+           极olor: var(--primary-color);
         }
 
         .summary-divider {
@@ -1212,7 +1212,7 @@
             }
 
             .cart-summary-actions {
-                display: flex;
+                display:极;
                 gap: 0.5rem;
                 align-items: center;
             }
@@ -1279,91 +1279,6 @@
     </style>
 </head>
 <body>
-    <!-- Cart Summary Bar (Fixed at top) -->
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">Wags Global</a>
-            </div>
-            <div class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="wallet.html" class="nav-link">Wallet</a>
-                <a href="cart.html" class="nav-link cart-link">
-                    <i class="fas fa-shopping-cart"></i>
-                    Cart <span class="cart-count">0</span>
-                </a>
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="register.html" class="nav-link">Register</a>
-            </div>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Flash Messages -->
-    <div class="flash-container">
-        <!-- Flash messages will appear here -->
-    </div>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Welcome to Wags Global Services</h1>
-                <p>Your trusted partner for global solutions and premium products</p>
-                <div class="hero-buttons">
-                    <a href="shop.html" class="btn btn-primary">Explore Shop</a>
-                    <a href="about.html" class="btn btn-secondary">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title">Why Choose Wags Global?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Global Reach</h3>
-                        <p>We provide services to clients all around the world with efficient delivery systems.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <h3>Quality Assurance</h3>
-                        <p>All our products undergo rigorous quality checks to ensure customer satisfaction.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <h3>Secure Transactions</h3>
-                        <p>Your transactions are protected with advanced encryption technologies.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Products Preview -->
-        <section class="products-preview">
-            <div class="container">
-                <h2 class="section-title">Featured Products</h2>
-                <div class="products-grid">
-                    <!-- Product
-    <!-- Cart Summary Bar (Fixed at top) -->
-
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -1414,20 +1329,21 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Wags Global Services LTD</h3>
-                <p>Providing quality services worldwide since 2023</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('about') }}">About Us</a></li>
-                    <li><a href="{{ url_for('shop') }}">Shop</a></li>
-                    <li><a href="{{ url_for('cart') }}">Cart</a></li>
-                </ul>
-            </div>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>Wags Global Services LTD</h3>
+                    <p>Providing quality services worldwide since 2023</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                        <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                        <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                    </ul>
+                </div>
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <p><i class="fas fa-map-marker-alt"></i> 123 Global Street, London, UK</p>
